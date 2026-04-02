@@ -98,9 +98,15 @@ void loop(){
  Serial.println(Amp);
 
  // TRIGGER 1
- if (Amp <= 2 && trigger2 == false){
+ if (Amp <= 3 && trigger2 == false){
    trigger1 = true;
    Serial.println("TRIGGER 1: Free Fall Detected");
+   if (!ml_window_active){
+     ml_window_active = true;
+     ml_count = 0;
+
+     Serial.println("\n[ML] Collecting motion segment...");
+   }
  }
 
  if (trigger1 == true){
@@ -115,19 +121,10 @@ void loop(){
    }
  }
 
- // START ML WINDOW
  if (trigger2 == true){
    trigger2count++;
-
-   if (!ml_window_active){
-     ml_window_active = true;
-     ml_count = 0;
-
-     Serial.println("\n[ML] Collecting motion segment...");
-   }
  }
 
- // ML DATA COLLECTION
  if (ml_window_active){
 
   float angle = sqrt(gx*gx + gy*gy + gz*gz);
@@ -137,7 +134,7 @@ void loop(){
 
   ml_count++;
 
-  if (ml_count >= 25){
+  if (ml_count >= 30){
 
     Serial.println("\n[ML] Processing...");
     delay(300);
@@ -153,7 +150,7 @@ void loop(){
     int freefall_duration = 0;
     int impact_duration = 0;
 
-    for (int i = 0; i < 25; i++){
+    for (int i = 0; i < 30; i++){
       float a = amp_buffer[i];
       float ang = angle_buffer[i];
 

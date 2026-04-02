@@ -1,15 +1,7 @@
-// #define BLYNK_TEMPLATE_ID "TMPL3Js5G4XRT"
-// #define BLYNK_TEMPLATE_NAME "Fall Detection"
-// #define BLYNK_AUTH_TOKEN "XjjJerK_uWeVDFsO1CmVBeYmwO_AAdxB"
-
 #include <Wire.h>
-// #include <WiFi.h>
-// #include <BlynkSimpleEsp32.h>
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
 
-// char ssid[] = "S25 Ultra";
-// char pass[] = "Sanjay-143";
 
 const int MPU_addr = 0x68;
 
@@ -32,12 +24,9 @@ void setup(){
 
  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
 
- // Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
 }
 
 void loop(){
-
- // Blynk.run();
 
  mpu_read();
 
@@ -56,7 +45,6 @@ void loop(){
 
    Serial.println("⚠ FALL DETECTED");
 
-   // Blynk.logEvent("fall_detected");
 
    delay(2000);
  }
